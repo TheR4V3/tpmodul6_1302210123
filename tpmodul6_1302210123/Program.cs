@@ -10,7 +10,7 @@ class SayaTubeVideo
 
     public SayaTubeVideo(string videoTitle)
     {
-        Debug.Assert(!string.IsNullOrEmpty(videoTitle) && videoTitle.Length <= 100, "Invalid video title");
+        Debug.Assert(!string.IsNullOrEmpty(videoTitle) && videoTitle.Length <= 100, "Judul Vidio Invalid");
 
         Random random = new Random();
         this.id = random.Next(10000, 99999); // 5-digit random number
@@ -21,7 +21,7 @@ class SayaTubeVideo
     public void IncreasePlayCount(int count)
     {
         Debug.Assert(count > 0, "Count harus lebih besar dari 0");
-        Debug.Assert(playCount + count <= 10000000, "Maximum play mnelebihi batas");
+        Debug.Assert(playCount + count <= 10000000, "Maximum play Melebihi Batas");
 
         try
         {
@@ -39,9 +39,9 @@ class SayaTubeVideo
 
     public void PrintVideoDetails()
     {
-        Console.WriteLine("Video ID: " + id);
-        Console.WriteLine("Title: " + title);
-        Console.WriteLine("Play count: " + playCount);
+        Console.WriteLine("Video ID: " + id );
+        Console.WriteLine("Title: " +title );
+        Console.WriteLine("Play Count: " + playCount );
     }
 }
 
@@ -50,7 +50,23 @@ class Program
     static void Main(string[] args)
     {
         SayaTubeVideo myVideo = new SayaTubeVideo("Tutorial Design By Contract – [MRafaEkaP]");
-        myVideo.IncreasePlayCount(1000); 
+
+        // Tes prekondisi bila kepanjangan
+
+        SayaTubeVideo invalidTitleVideo = new SayaTubeVideo("Kepanjangannn");
+
+        // Invalid play count
+        myVideo.IncreasePlayCount(-100);
+        myVideo.IncreasePlayCount(20000000); 
+
+        // Tes integer overflow
+        for (int i = 0; i < 1000000000; i++) // simulate 1 billion views
+        {
+            myVideo.IncreasePlayCount(10);
+        }
+
         myVideo.PrintVideoDetails();
     }
+
+
 }
